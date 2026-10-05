@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilel Delev — Livraison de courses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== EN-TÊTE ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <button class="logo-badge" id="logoBtn" aria-haspopup="dialog" aria-label="Voir les coordonnées du livreur">
+      <span class="logo-ring">
+        <span class="logo-text">BD</span>
+      </span>
+      <span class="logo-name">Bilel <em>Delev</em></span>
+    </button>
+
+    <div class="search-wrap">
+      <input type="search" id="searchInput" placeholder="Chercher un produit… (ex : crème fraîche)" aria-label="Chercher un produit">
+      <span class="search-icon">⌕</span>
+    </div>
+
+    <div class="cart-indicator" id="cartIndicator" title="Commande en cours">
+      <span class="cart-dot" id="cartDot" hidden></span>
+      🧺
+    </div>
+  </div>
+
+  <nav class="category-nav" id="categoryNav" aria-label="Catégories">
+    <button class="cat-chip active" data-cat="tous">Tous</button>
+    <button class="cat-chip" data-cat="fruits">Fruits</button>
+    <button class="cat-chip" data-cat="legumes">Légumes</button>
+    <button class="cat-chip" data-cat="laitiers">Produits laitiers</button>
+    <button class="cat-chip" data-cat="graisses">Matières grasses</button>
+    <button class="cat-chip" data-cat="conserves">Conserves</button>
+    <button class="cat-chip" data-cat="chocolats">Chocolats &amp; snacks</button>
+    <button class="cat-chip" data-cat="boulangerie">Farine &amp; boulangerie</button>
+    <button class="cat-chip" data-cat="hygiene">Hygiène &amp; cosmétique</button>
+    <button class="cat-chip" data-cat="viande">Viande</button>
+    <button class="cat-chip" data-cat="poisson">Poissons</button>
+    <button class="cat-chip" data-cat="article">Autres article</button>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <h1>Dites-nous ce qu'il vous manque.<br><span>On sort, vous restez.</span></h1>
+  <p>Cherchez un produit, décrivez exactement ce qu'il vous faut, et envoyez la commande directement au livreur.</p>
+</section>
+
+<!-- ===== GRILLE PRODUITS ===== -->
+<main>
+  <p class="results-count" id="resultsCount"></p>
+  <section class="product-grid" id="productGrid"></section>
+  <p class="no-results" id="noResults" hidden>Aucun produit ne correspond à votre recherche. Essayez un autre mot-clé.</p>
+</main>
+
+<footer class="site-footer">
+  <p>Bilel Delev — votre livreur de confiance, produit par produit.</p>
+</footer>
+
+<!-- ===== MODALE : FICHE LIVREUR ===== -->
+<div class="overlay" id="deliveryOverlay" hidden>
+  <div class="delivery-card" role="dialog" aria-modal="true" aria-labelledby="deliveryTitle">
+    <button class="close-btn" id="closeDelivery" aria-label="Fermer">✕</button>
+    <div class="delivery-avatar">BD</div>
+    <h2 id="deliveryTitle">Bilel Delev</h2>
+    <p class="delivery-role">Livreur — courses &amp; petites commandes</p>
+    <a class="phone-link" id="phoneDisplay" href="#">📞 +213 5 55 00 00 00</a>
+    <div class="delivery-actions">
+      <a class="btn btn-yellow" id="callBtn" href="tel:+213555000000">Appeler</a>
+      <a class="btn btn-outline" id="whatsBtn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODALE : COMMANDE PRODUIT ===== -->
+<div class="overlay" id="orderOverlay" hidden>
+  <div class="order-card" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+    <button class="close-btn" id="closeOrder" aria-label="Fermer">✕</button>
+
+    <div class="order-product">
+      <span class="order-thumb" id="orderThumb"></span>
+      <div>
+        <h2 id="orderTitle">Produit</h2>
+        <p class="order-cat" id="orderCat"></p>
+      </div>
+    </div>
+
+    <form id="orderForm">
+      <label class="field">
+        <span>Décrivez votre demande</span>
+        <textarea id="orderDescription" rows="3" required placeholder="Ex : je veux une bouteille de crème fraîche de 500ml, marque X si possible."></textarea>
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span>Nom</span>
+          <input type="text" id="orderNom" required placeholder="Votre nom">
+        </label>
+        <label class="field">
+          <span>Prénom</span>
+          <input type="text" id="orderPrenom" required placeholder="Votre prénom">
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Numéro de téléphone</span>
+        <input type="tel" id="orderTelephone" required placeholder="06 12 34 56 78">
+      </label>
+
+      <label class="field">
+        <span>Localisation (adresse ou quartier)</span>
+        <div class="location-row">
+          <input type="text" id="orderLocalisation" required placeholder="Ex : Rue X, Alger">
+          <button type="button" class="btn-locate" id="locateBtn" title="Utiliser ma position actuelle">📍</button>
+        </div>
+        <small class="loc-status" id="locStatus"></small>
+      </label>
+
+      <button type="submit" class="btn btn-yellow btn-full">Envoyer la commande au livreur</button>
+      <p class="form-hint">La commande sera envoyée via WhatsApp au numéro du livreur, avec tous les détails ci-dessus.</p>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="script.js"></script>
+</body>
+</html>
